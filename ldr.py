@@ -1,7 +1,9 @@
 import RPi.GPIO as GPIO, time, os      
-
+from lcd1602 import LCD1602 
 DEBUG = 1
 GPIO.setmode(GPIO.BCM)
+
+lcd = LCD1602()
 
 def RCtime (RCpin):
         reading = 0
@@ -21,6 +23,10 @@ def run():
 
         if RCtime(21) > 4000:
             GPIO.output(20, True)
+            lcd.lcd_string("LED:",lcd.LCD_LINE_1)
+            lcd.lcd_string("ON",lcd.LCD_LINE_2)
         else:
             GPIO.output(20, False)
+            lcd.lcd_string("LED:",lcd.LCD_LINE_1)
+            lcd.lcd_string("OFF",lcd.LCD_LINE_2)
 

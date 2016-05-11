@@ -5,6 +5,7 @@ from time import sleep #SLEEP?
 import time #TIME
 import ldr
 import hdr
+import led
 #Set the mode of numbering the pins.
 GPIO.setmode(GPIO.BCM)
 #GPIO pin 20 is the output (LDR'S LED).
@@ -53,30 +54,16 @@ while 1:            #PRINTING THE Home Screen
                lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
                lcd.lcd_string("ON",lcd.LCD_LINE_2)#PRINT LED 1: ON
                ldr.run()
-        if isPressed:
-            lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
-            lcd.lcd_string("OFF",lcd.LCD_LCD_LINE_2)
-
     #SINGLE LED BUTTON
     if GPIO.input(6):
-        if isPressed == False:#WHEN BUTTON PRESSED
+        if not isPressed:#WHEN BUTTON PRESSED
             lcd.lcd_string("LED 2:",lcd.LCD_LINE_1)
             lcd.lcd_string("ON",lcd.LCD_LINE_2)#PRINT LED 2: ON
-            isPressed = True
-            isOn = not isOn
-            GPIO.output( 13, isOn)
-            time.sleep(3) #SLEEP 3 SECONDS
-        if isPressed == False: 
-            lcd.lcd_string("LED 2:",lcd.LCD_LINE_1)
-            lcd.lcd_string("OFF",lcd.LCD_LINE_2)
-            isPressed = False
-            isOn = isOn
-            GPIO.output(13, not isOn)
-            time.sleep(3)
+            led.run()
     #THERMISTOR/fan
     if GPIO.input(26):
         if not isPressed: #WHEN FAN BUTTON PRESSED 
-               lcd.lcd_string("LED 3:",lcd.LCD_LINE_1)
+               lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
                lcd.lcd_string("ON",lcd.LCD_LINE_2) #PRINT LED 3: ON (WILL CHANGE OUT LED TO THE FAN
                hdr.run()
     else:
