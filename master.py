@@ -56,10 +56,16 @@ while 1:            #PRINTING THE Home Screen
                ldr.run()
     #SINGLE LED BUTTON
     if GPIO.input(6):
-        if not isPressed:#WHEN BUTTON PRESSED
-            lcd.lcd_string("LED 2:",lcd.LCD_LINE_1)
-            lcd.lcd_string("ON",lcd.LCD_LINE_2)#PRINT LED 2: ON
-            led.run()
+        lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
+        lcd.lcd_string("ON",lcd.LCD_LINE_2)
+        time.sleep(3)
+        if not isPressed:
+            isPressed = True
+            isOn = not isOn
+            GPIO.output( 13, isOn)
+            lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
+            lcd.lcd_string("OFF",lcd.LCD_LINE_2)
+
     #THERMISTOR/fan
     if GPIO.input(26):
         if not isPressed: #WHEN FAN BUTTON PRESSED 

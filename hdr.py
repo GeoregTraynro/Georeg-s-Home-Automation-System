@@ -21,7 +21,7 @@ def run():
         GPIO.setup(12, GPIO.OUT)              
         print RCtime(19)     # Read RC timing using pin #19
 
-        if RCtime(19) < 40000:
+        if RCtime(19) < 28000:
             GPIO.output(12, True)
             lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
             lcd.lcd_string("ON",lcd.LCD_LINE_2)
