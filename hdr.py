@@ -22,12 +22,15 @@ def RCtime (RCpin):
 def run():
     while True:
     	#GPIO pin 12 is the output (TEMP'S led).
+    	print ("DEBUG: setting up the gpio pins")
         GPIO.setup(12, GPIO.OUT)              
         print RCtime(19)     # Read RC timing using pin #19
 
         if RCtime(19) < 50000:
+        	print ("DEBUG: Values of fan are being printed")
         	#If tempreture sensors value is above 50000, turns led on
             GPIO.output(12, True)
+            print ("DEBUG: LED is on, values are above 50000")
             #prints on lcd screen "fan on"
             lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
             lcd.lcd_string("ON",lcd.LCD_LINE_2)
@@ -35,6 +38,7 @@ def run():
         	#otherwise (if value is below 50000), turns led off
             GPIO.output(12, False)
             #prints on lcd display "Fan Off"
+            print ("DEBUG: LED is on, values are below 50000")
             lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
             lcd.lcd_string("OFF",lcd.LCD_LINE_2)
 #run()

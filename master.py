@@ -6,6 +6,8 @@ import time #TIME
 import ldr
 import hdr
 import led
+
+print ("DEBUG: setting up the gpio pins")
 #Set the mode of numbering the pins.
 GPIO.setmode(GPIO.BCM)
 #GPIO pin 20 is the output (LDR'S LED).
@@ -42,33 +44,44 @@ def light_level(pin):
         return level
 #While Loop
 while 1:            #PRINTING THE Home Screen
+    print ("DEBUG: Home screen")
     lcd.lcd_string("Home",lcd.LCD_LINE_1)
     lcd.lcd_string("Automation",lcd.LCD_LINE_2)
     
     #LDR
     if GPIO.input(2):
+    	print ("DEBUG:Light dependent ristor's button pressed")
         if not isPressed: #IF BUTTON PRESSED
+               print ("DEBUG: running LDR's code")
                lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
                lcd.lcd_string("ON",lcd.LCD_LINE_2)#PRINT LED 1: ON
                ldr.run()
     #SINGLE LED BUTTON
     if GPIO.input(6):
+    	print ("DEBUG: Single led button pressed")
         lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
         lcd.lcd_string("ON",lcd.LCD_LINE_2)
+        print ("DEBUG: waiting for 3 seconds")
+        print ("DEBUG: led is off")
         time.sleep(3)
         if not isPressed:
+        	print ("DEBUG: LED button pressed")
             isPressed = True
             isOn = not isOn
             GPIO.output( 13, isOn)
+            print ("DEBUG: led is on")
             lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
             lcd.lcd_string("OFF",lcd.LCD_LINE_2)
 
     #THERMISTOR/fan
     if GPIO.input(26):
-        if not isPressed: #WHEN FAN BUTTON PRESSED 
+    	print ("DEBUG: Fan button pressed")
+        if not isPressed: #WHEN FAN BUTTON PRESSED
+               print ("DEBUG: running Fan code") 
                lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
                lcd.lcd_string("ON",lcd.LCD_LINE_2) #PRINT LED 3: ON (WILL CHANGE OUT LED TO THE FAN
                hdr.run()
 
     else:
+    	print ("DEBUG: returning to home screen")
         isPressed = False #RETURNS TO HOME SECREN
