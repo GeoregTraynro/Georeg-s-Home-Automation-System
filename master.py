@@ -10,8 +10,8 @@ import led
 GPIO.setmode(GPIO.BCM)
 #GPIO pin 20 is the output (LDR'S LED).
 GPIO.setup(20, GPIO.OUT)
-#GPIO pin 5 is the input (LDR'S BUTTON).
-GPIO.setup(5, GPIO.IN)
+#GPIO pin 2 is the input (LDR'S BUTTON).
+GPIO.setup(2, GPIO.IN)
 #Initialise GPIO20 to LOW (true) so that the LED is off.
 GPIO.output(20, False)
 #GPIO pin 26 is the input (TEMP'S Button).
@@ -20,7 +20,7 @@ GPIO.setup(26, GPIO.IN)
 GPIO.setup(13, GPIO.OUT)
 #GPIO pin 6 is the input for (SINGLE BUTTON LED).
 GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-#Initialise GPIO10 to high (true) so that the LED is off.
+#Initialise GPIO13 to high (true) so that the LED is off.
 GPIO.output(13, False)
 #(TEMP'S LED)
 GPIO.setup(12, GPIO.OUT)
@@ -40,16 +40,13 @@ def light_level(pin):
         while (GPIO.input(pin) == GPIO.LOW):
                 level += 1
         return level
-
-
-
 #While Loop
 while 1:            #PRINTING THE Home Screen
     lcd.lcd_string("Home",lcd.LCD_LINE_1)
     lcd.lcd_string("Automation",lcd.LCD_LINE_2)
     
     #LDR
-    if GPIO.input(5):
+    if GPIO.input(2):
         if not isPressed: #IF BUTTON PRESSED
                lcd.lcd_string("LED 1:",lcd.LCD_LINE_1)
                lcd.lcd_string("ON",lcd.LCD_LINE_2)#PRINT LED 1: ON
@@ -72,7 +69,6 @@ while 1:            #PRINTING THE Home Screen
                lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
                lcd.lcd_string("ON",lcd.LCD_LINE_2) #PRINT LED 3: ON (WILL CHANGE OUT LED TO THE FAN
                hdr.run()
+
     else:
         isPressed = False #RETURNS TO HOME SECREN
-
-

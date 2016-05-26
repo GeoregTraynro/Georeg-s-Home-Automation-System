@@ -1,6 +1,8 @@
+#Import the required module.
 import RPi.GPIO as GPIO, time, os      
 from lcd1602 import LCD1602
 DEBUG = 1
+#Set the mode of numbering the pins.
 GPIO.setmode(GPIO.BCM)
 
 lcd = LCD1602()
@@ -16,18 +18,23 @@ def RCtime (RCpin):
         while (GPIO.input(RCpin) == GPIO.LOW):
                 reading += 1
         return reading
+#Run code used in master code
 def run():
-    while True:                       
+    while True:
+    	#GPIO pin 12 is the output (TEMP'S led).
         GPIO.setup(12, GPIO.OUT)              
         print RCtime(19)     # Read RC timing using pin #19
 
-        if RCtime(19) < 28000:
+        if RCtime(19) < 50000:
+        	#If tempreture sensors value is above 50000, turns led on
             GPIO.output(12, True)
+            #prints on lcd screen "fan on"
             lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
             lcd.lcd_string("ON",lcd.LCD_LINE_2)
         else:
+        	#otherwise (if value is below 50000), turns led off
             GPIO.output(12, False)
-            lcd.lcd_string("LED:",lcd.LCD_LINE_1)
+            #prints on lcd display "Fan Off"
+            lcd.lcd_string("FAN:",lcd.LCD_LINE_1)
             lcd.lcd_string("OFF",lcd.LCD_LINE_2)
-
 #run()
